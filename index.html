@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VajbPet - Digit&#xE1;ln&#xED; karta mazl&#xED;&#x10D;ka</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2D6A4F;
+            --primary-light: #40916C;
+            --primary-dark: #1B4332;
+            --accent: #D8F3DC;
+            --bg: #F8FAF9;
+            --surface: #FFFFFF;
+            --text: #1A1A2E;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --danger: #DC2626;
+            --danger-bg: #FEF2F2;
+            --warning: #F59E0B;
+            --success: #10B981;
+            --radius: 12px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+            --shadow-hover: 0 4px 6px rgba(0,0,0,0.1), 0 10px 20px rgba(0,0,0,0.08);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        .header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .btn-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+        
+        .btn-icon:hover {
+            background: var(--bg);
+            color: var(--text);
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            border: none;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--bg);
+        }
+        
+        .btn-danger {
+            background: var(--danger-bg);
+            color: var(--danger);
+        }
+        
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        
+        .btn-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 90;
+        }
+        
+        .btn-fab:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Forms */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+        
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 15px;
+            font-family: inherit;
+            background: var(--surface);
+            transition: all 0.2s;
+        }
+        
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(45,106,79,0.1);
+        }
+        
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-hint {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 0;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .card-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        /* Pet card */
+        .pet-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        
+        .pet-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .pet-card.lost {
+            border-color: var(--danger);
+        }
+        
+        .pet-card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .pet-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+        
+        .pet-info h3 {
+            font-size: 17px;
+            font-weight: 600;
+        }
+        
+        .pet-info p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .pet-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .pet-status.lost {
+            background: var(--danger-bg);
+            color: var(--danger);
+        }
+        
+        .pet-status.safe {
+            background: #ECFDF5;
+            color: var(--success);
+        }
+        
+        .pet-nfc-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 12px;
+            word-break: break-all;
+        }
+        
+        .pet-nfc-link button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary);
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        
+        /* Pages */
+        .page {
+            display: none;
+            padding: 24px 0;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Auth page */
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .auth-logo .logo-icon {
+            width: 64px;
+            height: 64px;
+            font-size: 32px;
+            margin: 0 auto 16px;
+        }
+        
+        .auth-logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .auth-logo p {
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: none;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-bottom: 2px solid var(--border);
+            transition: all 0.2s;
+        }
+        
+        .auth-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .empty-state p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        
+        /* Public page */
+        .public-page {
+            background: var(--bg);
+            min-height: 100vh;
+        }
+        
+        .public-header {
+            background: var(--primary);
+            color: white;
+            padding: 32px 20px;
+            text-align: center;
+        }
+        
+        .public-header .pet-avatar {
+            width: 80px;
+            height: 80px;
+            font-size: 40px;
+            background: rgba(255,255,255,0.2);
+            margin: 0 auto 16px;
+        }
+        
+        .public-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .public-header p {
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+        
+        .public-content {
+            padding: 24px 20px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .detail-value {
+            font-weight: 500;
+            text-align: right;
+        }
+        
+        .lost-banner {
+            background: var(--danger-bg);
+            color: var(--danger);
+            padding: 16px 20px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .found-form {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--text);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 200;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        
+        /* Toggle switch */
+        .toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+        }
+        
+        .toggle-label {
+            font-size: 15px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            background: var(--border);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .toggle-switch.active {
+            background: var(--primary);
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+        
+        .toggle-switch.active::after {
+            transform: translateX(22px);
+        }
+        
+        /* Section title */
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin: 24px 0 12px;
+        }
+        
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (min-width: 640px) {
+            .container {
+                max-width: 520px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Auth Page -->
+<div id="authPage" class="page active">
+    <div class="auth-page">
+        <div class="auth-logo">
+            <div class="logo-icon">&#x1F43E;</div>
+            <h1>VajbPet</h1>
+            <p>Digit&#xE1;ln&#xED; karta pro tv&#xE9;ho mazl&#xED;&#x10D;ka</p>
+        </div>
+        <div class="container">
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">P&#x159;ihl&#xE1;&#x161;en&#xED;</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">Registrace</button>
+            </div>
+            
+            <form id="loginForm" class="auth-form active" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="loginEmail" required placeholder="vas@email.cz">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Heslo</label>
+                    <input type="password" class="form-input" id="loginPassword" required placeholder="&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;">
+                </div>
+                <button type="submit" class="btn btn-primary">P&#x159;ihl&#xE1;sit se</button>
+                <p id="loginError" style="color: var(--danger); margin-top: 12px; font-size: 14px; display: none;"></p>
+            </form>
+            
+            <form id="registerForm" class="auth-form" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label class="form-label">Jm&#xE9;no</label>
+                    <input type="text" class="form-input" id="registerName" required placeholder="Jan Nov&#xE1;k">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="registerEmail" required placeholder="vas@email.cz">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Heslo</label>
+                    <input type="password" class="form-input" id="registerPassword" required minlength="6" placeholder="Min. 6 znak&#x16F;">
+                </div>
+                <button type="submit" class="btn btn-primary">Vytvo&#x159;it &#xFA;&#x10D;et</button>
+                <p id="registerError" style="color: var(--danger); margin-top: 12px; font-size: 14px; display: none;"></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- App Pages (require auth) -->
+<div id="appPages" style="display: none;">
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">&#x1F43E;</div>
+                <span>VajbPet</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <button class="btn-icon" onclick="showPage('profilePage')" title="Profil">&#x1F464;</button>
+                <button class="btn-icon" onclick="handleLogout()" title="Odhl&#xE1;sit se">&#x1F6AA;</button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Dashboard -->
+    <div id="dashboardPage" class="page active">
+        <div class="container">
+            <h2 style="margin-bottom: 8px; font-size: 24px;">Moji mazl&#xED;&#x10D;ci</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 24px;">Spr&#xE1;va digit&#xE1;ln&#xED;ch karet</p>
+            
+            <div id="petsList">
+                <div class="loading"><span class="spinner"></span> Na&#x10D;&#xED;t&#xE1;n&#xED;...</div>
+            </div>
+            
+            <div id="emptyPets" class="empty-state" style="display: none;">
+                <div class="empty-state-icon">&#x1F415;</div>
+                <h3>Zat&#xED;m nem&#xE1;&#x161; &#x17E;&#xE1;dn&#xE9; mazl&#xED;&#x10D;ky</h3>
+                <p>P&#x159;idej sv&#xE9;ho prvn&#xED;ho mazl&#xED;&#x10D;ka a vytvo&#x159; mu digit&#xE1;ln&#xED; kartu s NFC &#x10D;ipem.</p>
+            </div>
+        </div>
+        
+        <button class="btn-fab" onclick="showPage('petFormPage'); resetPetForm();">+</button>
+    </div>
+    
+    <!-- Pet Detail -->
+    <div id="petDetailPage" class="page">
+        <div class="container">
+            <button class="btn btn-secondary btn-sm" onclick="showPage('dashboardPage')" style="width: auto; margin-bottom: 16px;">&#x2190; Zp&#x11B;t</button>
+            
+            <div id="petDetailContent"></div>
+            
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <button class="btn btn-primary" onclick="editCurrentPet()">Upravit</button>
+                <button class="btn btn-danger" onclick="deleteCurrentPet()">Smazat</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Pet Form -->
+    <div id="petFormPage" class="page">
+        <div class="container">
+            <button class="btn btn-secondary btn-sm" onclick="showPage('dashboardPage')" style="width: auto; margin-bottom: 16px;">&#x2190; Zp&#x11B;t</button>
+            
+            <h2 id="petFormTitle" style="margin-bottom: 24px;">Nov&#xFD; mazl&#xED;&#x10D;ek</h2>
+            
+            <form id="petForm" onsubmit="handlePetSubmit(event)">
+                <input type="hidden" id="petId">
+                
+                <p class="section-title">Z&#xE1;kladn&#xED; informace</p>
+                
+                <div class="form-group">
+                    <label class="form-label">Jm&#xE9;no mazl&#xED;&#x10D;ka *</label>
+                    <input type="text" class="form-input" id="petName" required placeholder="nap&#x159;. Rex">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Druh *</label>
+                    <select class="form-select" id="petSpecies" required>
+                        <option value="">Vyberte druh</option>
+                        <option value="dog">&#x1F415; Pes</option>
+                        <option value="cat">&#x1F408; Ko&#x10D;ka</option>
+                        <option value="rabbit">&#x1F430; Kr&#xE1;l&#xED;k</option>
+                        <option value="bird">&#x1F426; Pt&#xE1;k</option>
+                        <option value="hamster">&#x1F439; K&#x159;e&#x10D;ek</option>
+                        <option value="other">&#x1F43E; Jin&#xE9;</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Plemeno</label>
+                    <input type="text" class="form-input" id="petBreed" placeholder="nap&#x159;. Labradorsk&#xFD; retr&#xED;vr">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Barva</label>
+                    <input type="text" class="form-input" id="petColor" placeholder="nap&#x159;. Hn&#x11B;d&#xE1;">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Datum narozen&#xED;</label>
+                    <input type="date" class="form-input" id="petBirthDate">
+                </div>
+                
+                <p class="section-title">Kontaktn&#xED; &#xFA;daje (zobrazen&#xE9; po naskenov&#xE1;n&#xED;)</p>
+                <p class="form-hint" style="margin-bottom: 16px;">Pokud nevypln&#xED;&#x161;, pou&#x17E;ij&#xED; se &#xFA;daje z tv&#xE9;ho profilu.</p>
+                
+                <div class="form-group">
+                    <label class="form-label">Telefonn&#xED; &#x10D;&#xED;slo</label>
+                    <input type="tel" class="form-input" id="petPhone" placeholder="+420 123 456 789">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Adresa</label>
+                    <input type="text" class="form-input" id="petAddress" placeholder="Ulice 123, M&#x11B;sto">
+                </div>
+                
+                <p class="section-title">Zdravotn&#xED; &#xFA;daje</p>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="petVaccinated">
+                    <label for="petVaccinated">Je o&#x10D;kovan&#xFD;</label>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Datum posledn&#xED;ho o&#x10D;kov&#xE1;n&#xED;</label>
+                    <input type="date" class="form-input" id="petVaccinationDate">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Alergie</label>
+                    <input type="text" class="form-input" id="petAllergies" placeholder="nap&#x159;. Alergie na pyl">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Dal&#x161;&#xED; informace</label>
+                    <textarea class="form-textarea" id="petAdditionalInfo" placeholder="Jak&#xE9;koli dal&#x161;&#xED; d&#x16F;le&#x17E;it&#xE9; informace..."></textarea>
+                </div>
+                
+                <p class="section-title">Nastaven&#xED;</p>
+                
+                <div class="toggle">
+                    <span class="toggle-label">Mazl&#xED;&#x10D;ek je ztracen&#xFD;</span>
+                    <div class="toggle-switch" id="petLostToggle" onclick="toggleLost()"></div>
+                </div>
+                <input type="hidden" id="petLost" value="false">
+                
+                <div class="form-group" id="lostNoteGroup" style="display: none;">
+                    <label class="form-label">Zpr&#xE1;va p&#x159;i ztr&#xE1;t&#x11B;</label>
+                    <textarea class="form-textarea" id="petLostNote" placeholder="Pomozte mi naj&#xED;t m&#xE9;ho mazl&#xED;&#x10D;ka! Posledn&#x11B; vid&#x11B;n u..."></textarea>
+                </div>
+                
+                <div class="toggle">
+                    <span class="toggle-label">Notifikace p&#x159;i naskenov&#xE1;n&#xED;</span>
+                    <div class="toggle-switch" id="petNotifyToggle" onclick="toggleNotify()"></div>
+                </div>
+                <input type="hidden" id="petNotify" value="false">
+                
+                <button type="submit" class="btn btn-primary" style="margin-top: 24px;">Ulo&#x17E;it mazl&#xED;&#x10D;ka</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Profile Page -->
+    <div id="profilePage" class="page">
+        <div class="container">
+            <button class="btn btn-secondary btn-sm" onclick="showPage('dashboardPage')" style="width: auto; margin-bottom: 16px;">&#x2190; Zp&#x11B;t</button>
+            
+            <h2 style="margin-bottom: 24px;">M&#x16F;j profil</h2>
+            
+            <form id="profileForm" onsubmit="handleProfileUpdate(event)">
+                <div class="form-group">
+                    <label class="form-label">Jm&#xE9;no</label>
+                    <input type="text" class="form-input" id="profileName" placeholder="Jan Nov&#xE1;k">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="profileEmail" readonly style="background: var(--bg);">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Telefonn&#xED; &#x10D;&#xED;slo</label>
+                    <input type="tel" class="form-input" id="profilePhone" placeholder="+420 123 456 789">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Adresa</label>
+                    <input type="text" class="form-input" id="profileAddress" placeholder="Ulice 123, M&#x11B;sto">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Ulo&#x17E;it zm&#x11B;ny</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Public Pet Page (no auth) -->
+<div id="publicPage" class="public-page" style="display: none;">
+    <div class="public-header">
+        <div class="pet-avatar" id="publicPetAvatar">&#x1F415;</div>
+        <h1 id="publicPetName">Na&#x10D;&#xED;t&#xE1;n&#xED;...</h1>
+        <p id="publicPetSpecies">Digit&#xE1;ln&#xED; karta mazl&#xED;&#x10D;ka</p>
+    </div>
+    
+    <div class="public-content">
+        <div class="container">
+            <div id="publicLostBanner" class="lost-banner" style="display: none;">
+                &#x26A0;&#xFE0F; Tento mazl&#xED;&#x10D;ek je ztracen&#xFD;!
+            </div>
+            
+            <div class="card">
+                <h3 style="margin-bottom: 16px; font-size: 16px;">Informace o mazl&#xED;&#x10D;kovi</h3>
+                <div id="publicPetDetails"></div>
+            </div>
+            
+            <div class="card" style="margin-top: 16px;">
+                <h3 style="margin-bottom: 16px; font-size: 16px;">Kontakt na majitele</h3>
+                <div id="publicContactInfo"></div>
+            </div>
+            
+            <div class="found-form">
+                <h3 style="margin-bottom: 12px; font-size: 16px;">Na&#x161;el jsi tohoto mazl&#xED;&#x10D;ka? &#x1F389;</h3>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">Vypl&#x148; &#xFA;daje a dej majiteli v&#x11B;d&#x11B;t, &#x17E;e jeho mazl&#xED;&#x10D;ek je v po&#x159;&#xE1;dku.</p>
+                
+                <form id="foundForm" onsubmit="handleFoundSubmit(event)">
+                    <input type="hidden" id="foundPetId">
+                    
+                    <div class="form-group">
+                        <label class="form-label">Tv&#xE9; jm&#xE9;no</label>
+                        <input type="text" class="form-input" id="foundName" required placeholder="Jm&#xE9;no">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Telefon</label>
+                        <input type="tel" class="form-input" id="foundPhone" placeholder="+420 123 456 789">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="foundEmail" placeholder="email@example.cz">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Lokalita</label>
+                        <input type="text" class="form-input" id="foundLocation" placeholder="Kde jsi mazl&#xED;&#x10D;ka na&#x161;el?">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Zpr&#xE1;va</label>
+                        <textarea class="form-textarea" id="foundMessage" placeholder="Napi&#x161; majiteli zpr&#xE1;vu..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Odeslat zpr&#xE1;vu majiteli</button>
+                </form>
+            </div>
+            
+            <div style="text-align: center; margin-top: 32px; padding-bottom: 32px;">
+                <p style="font-size: 13px; color: var(--text-secondary);">
+                    Vytvo&#x159;eno pomoc&#xED; <strong style="color: var(--primary);">VajbPet</strong> &#x1F43E;
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script>
+// ===== SUPABASE CONFIG =====
+const SUPABASE_URL = 'https://uvrdnpexejccykgfjabq.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2cmRucGV4ZWpjY3lrZ2ZqYWJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc3NjE1OTIsImV4cCI6MjEwMzMzNzU5Mn0.Y9dOeUX_5tpeGCk-G8F-UrB8FdQGv_EtQfxV1qpMYnA';
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ===== STATE =====
+let currentUser = null;
+let currentPet = null;
+let pets = [];
+
+// ===== SPECIES EMOJI =====
+const speciesEmoji = {
+    dog: '&#x1F415;',
+    cat: '&#x1F408;',
+    rabbit: '&#x1F430;',
+    bird: '&#x1F426;',
+    hamster: '&#x1F439;',
+    other: '&#x1F43E;'
+};
+
+const speciesNames = {
+    dog: 'Pes',
+    cat: 'Ko&#x10D;ka',
+    rabbit: 'Kr&#xE1;l&#xED;k',
+    bird: 'Pt&#xE1;k',
+    hamster: 'K&#x159;e&#x10D;ek',
+    other: 'Jin&#xE9;'
+};
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', async () => {
+    // Check if we're on a public pet page
+    const urlParams = new URLSearchParams(window.location.search);
+    const petSlug = urlParams.get('pet');
+    
+    if (petSlug) {
+        document.getElementById('authPage').style.display = 'none';
+        document.getElementById('appPages').style.display = 'none';
+        document.getElementById('publicPage').style.display = 'block';
+        await loadPublicPet(petSlug);
+        return;
+    }
+    
+    // Check auth state
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+        currentUser = session.user;
+        showApp();
+    }
+    
+    // Listen for auth changes
+    supabase.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_IN' && session) {
+            currentUser = session.user;
+            showApp();
+        } else if (event === 'SIGNED_OUT') {
+            currentUser = null;
+            showAuth();
+        }
+    });
+});
+
+// ===== NAVIGATION =====
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    window.scrollTo(0, 0);
+}
+
+function showApp() {
+    document.getElementById('authPage').style.display = 'none';
+    document.getElementById('appPages').style.display = 'block';
+    document.getElementById('publicPage').style.display = 'none';
+    loadPets();
+    loadProfile();
+}
+
+function showAuth() {
+    document.getElementById('authPage').style.display = 'block';
+    document.getElementById('appPages').style.display = 'none';
+    document.getElementById('publicPage').style.display = 'none';
+}
+
+// ===== AUTH =====
+function switchAuthTab(tab) {
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+    
+    if (tab === 'login') {
+        document.querySelectorAll('.auth-tab')[0].classList.add('active');
+        document.getElementById('loginForm').classList.add('active');
+    } else {
+        document.querySelectorAll('.auth-tab')[1].classList.add('active');
+        document.getElementById('registerForm').classList.add('active');
+    }
+}
+
+async function handleLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    const errorEl = document.getElementById('loginError');
+    
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    
+    if (error) {
+        errorEl.textContent = getErrorMessage(error.message);
+        errorEl.style.display = 'block';
+    } else {
+        errorEl.style.display = 'none';
+    }
+}
+
+async function handleRegister(e) {
+    e.preventDefault();
+    const name = document.getElementById('registerName').value;
+    const email = document.getElementById('registerEmail').value;
+    const password = document.getElementById('registerPassword').value;
+    const errorEl = document.getElementById('registerError');
+    
+    const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { full_name: name } }
+    });
+    
+    if (error) {
+        errorEl.textContent = getErrorMessage(error.message);
+        errorEl.style.display = 'block';
+    } else {
+        errorEl.style.display = 'none';
+        showToast('&#xDA;&#x10D;et vytvo&#x159;en! Zkontroluj email pro potvrzen&#xED;.');
+        switchAuthTab('login');
+    }
+}
+
+async function handleLogout() {
+    await supabase.auth.signOut();
+}
+
+function getErrorMessage(msg) {
+    if (msg.includes('Invalid login')) return 'Neplatn&#xFD; email nebo heslo';
+    if (msg.includes('Email not confirmed')) return 'Email zat&#xED;m nebyl potvrzen. Zkontroluj svou schr&#xE1;nku.';
+    if (msg.includes('User already registered')) return 'Tento email je ji&#x17E; zaregistrov&#xE1;n';
+    if (msg.includes('Password should be')) return 'Heslo mus&#xED; m&#xED;t alespo&#x148; 6 znak&#x16F;';
+    return msg;
+}
+
+// ===== PETS =====
+async function loadPets() {
+    const { data, error } = await supabase
+        .from('pets')
+        .select('*')
+        .eq('owner_id', currentUser.id)
+        .order('created_at', { ascending: false });
+    
+    if (error) {
+        showToast('Chyba p&#x159;i na&#x10D;&#xED;t&#xE1;n&#xED; mazl&#xED;&#x10D;k&#x16F;');
+        return;
+    }
+    
+    pets = data || [];
+    renderPetsList();
+}
+
+function renderPetsList() {
+    const container = document.getElementById('petsList');
+    const emptyEl = document.getElementById('emptyPets');
+    
+    if (pets.length === 0) {
+        container.innerHTML = '';
+        emptyEl.style.display = 'block';
+        return;
+    }
+    
+    emptyEl.style.display = 'none';
+    
+    // NFC URLs use relative query strings
+    
+    container.innerHTML = pets.map(pet => {
+        const nfcUrl = `?pet=${pet.nfc_slug}`;
+        return `
+            <div class="pet-card ${pet.is_lost ? 'lost' : ''}" onclick="showPetDetail('${pet.id}')">
+                <div class="pet-card-header">
+                    <div class="pet-avatar">${speciesEmoji[pet.species] || '&#x1F43E;'}</div>
+                    <div class="pet-info">
+                        <h3>${escapeHtml(pet.name)}</h3>
+                        <p>${speciesNames[pet.species] || pet.species}${pet.breed ? ' &#xB7; ' + escapeHtml(pet.breed) : ''}</p>
+                    </div>
+                    ${pet.is_lost 
+                        ? '<span class="pet-status lost">&#x1F534; Ztracen&#xFD;</span>' 
+                        : '<span class="pet-status safe">&#x1F7E2; V po&#x159;&#xE1;dku</span>'}
+                </div>
+                <div class="pet-nfc-link">
+                    <span>&#x1F517; ${nfcUrl}</span>
+                    <button onclick="event.stopPropagation(); copyToClipboard('${nfcUrl}')">Kop&#xED;rovat</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+async function showPetDetail(petId) {
+    currentPet = pets.find(p => p.id === petId);
+    if (!currentPet) return;
+    
+    // NFC URLs use relative query strings
+    const nfcUrl = `?pet=${currentPet.nfc_slug}`;
+    
+    document.getElementById('petDetailContent').innerHTML = `
+        <div class="card">
+            <div style="text-align: center; padding: 20px 0;">
+                <div class="pet-avatar" style="width: 80px; height: 80px; font-size: 40px; margin: 0 auto 16px;">
+                    ${speciesEmoji[currentPet.species] || '&#x1F43E;'}
+                </div>
+                <h2 style="font-size: 24px;">${escapeHtml(currentPet.name)}</h2>
+                <p style="color: var(--text-secondary);">${speciesNames[currentPet.species] || currentPet.species}${currentPet.breed ? ' &#xB7; ' + escapeHtml(currentPet.breed) : ''}</p>
+                ${currentPet.is_lost ? '<span class="pet-status lost" style="margin-top: 12px;">&#x1F534; Ztracen&#xFD;</span>' : '<span class="pet-status safe" style="margin-top: 12px;">&#x1F7E2; V po&#x159;&#xE1;dku</span>'}
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3 style="margin-bottom: 16px; font-size: 16px;">NFC Odkaz</h3>
+            <div class="pet-nfc-link" style="margin-top: 0;">
+                <span>${nfcUrl}</span>
+                <button onclick="copyToClipboard('${nfcUrl}')">Kop&#xED;rovat</button>
+            </div>
+            <p class="form-hint" style="margin-top: 8px;">Tento odkaz nahraj do NFC &#x10D;ipu mazl&#xED;&#x10D;ka. Po naskenov&#xE1;n&#xED; se zobraz&#xED; jeho ve&#x159;ejn&#xE1; karta.</p>
+        </div>
+        
+        <div class="card">
+            <h3 style="margin-bottom: 16px; font-size: 16px;">Z&#xE1;kladn&#xED; informace</h3>
+            ${renderDetailRow('Jm&#xE9;no', currentPet.name)}
+            ${renderDetailRow('Druh', speciesNames[currentPet.species] || currentPet.species)}
+            ${currentPet.breed ? renderDetailRow('Plemeno', currentPet.breed) : ''}
+            ${currentPet.color ? renderDetailRow('Barva', currentPet.color) : ''}
+            ${currentPet.birth_date ? renderDetailRow('Datum narozen&#xED;', formatDate(currentPet.birth_date)) : ''}
+        </div>
+        
+        <div class="card">
+            <h3 style="margin-bottom: 16px; font-size: 16px;">Kontaktn&#xED; &#xFA;daje</h3>
+            ${renderDetailRow('Telefon', currentPet.contact_phone || '&#x2014; (pou&#x17E;ije se z profilu)')}
+            ${renderDetailRow('Adresa', currentPet.contact_address || '&#x2014; (pou&#x17E;ije se z profilu)')}
+        </div>
+        
+        <div class="card">
+            <h3 style="margin-bottom: 16px; font-size: 16px;">Zdravotn&#xED; &#xFA;daje</h3>
+            ${renderDetailRow('O&#x10D;kov&#xE1;n&#xED;', currentPet.is_vaccinated ? '&#x2705; Ano' + (currentPet.vaccination_date ? ' (' + formatDate(currentPet.vaccination_date) + ')' : '') : '&#x274C; Ne')}
+            ${currentPet.allergies ? renderDetailRow('Alergie', currentPet.allergies) : ''}
+            ${currentPet.additional_info ? renderDetailRow('Dal&#x161;&#xED; info', currentPet.additional_info) : ''}
+        </div>
+        
+        <div class="card">
+            <h3 style="margin-bottom: 16px; font-size: 16px;">Nastaven&#xED;</h3>
+            ${renderDetailRow('Notifikace p&#x159;i naskenov&#xE1;n&#xED;', currentPet.notify_on_scan ? '&#x2705; Zapnuto' : '&#x274C; Vypnuto')}
+        </div>
+        
+        ${currentPet.is_lost && currentPet.lost_note ? `
+        <div class="card" style="border: 2px solid var(--danger);">
+            <h3 style="margin-bottom: 12px; font-size: 16px; color: var(--danger);">&#x26A0;&#xFE0F; Zpr&#xE1;va p&#x159;i ztr&#xE1;t&#x11B;</h3>
+            <p>${escapeHtml(currentPet.lost_note)}</p>
+        </div>
+        ` : ''}
+    `;
+    
+    showPage('petDetailPage');
+}
+
+function renderDetailRow(label, value) {
+    return `<div class="detail-row"><span class="detail-label">${label}</span><span class="detail-value">${escapeHtml(String(value))}</span></div>`;
+}
+
+// ===== PET FORM =====
+function resetPetForm() {
+    document.getElementById('petFormTitle').textContent = 'Nov&#xFD; mazl&#xED;&#x10D;ek';
+    document.getElementById('petForm').reset();
+    document.getElementById('petId').value = '';
+    document.getElementById('petLost').value = 'false';
+    document.getElementById('petNotify').value = 'false';
+    document.getElementById('petLostToggle').classList.remove('active');
+    document.getElementById('petNotifyToggle').classList.remove('active');
+    document.getElementById('lostNoteGroup').style.display = 'none';
+}
+
+function editCurrentPet() {
+    if (!currentPet) return;
+    
+    document.getElementById('petFormTitle').textContent = 'Upravit mazl&#xED;&#x10D;ka';
+    document.getElementById('petId').value = currentPet.id;
+    document.getElementById('petName').value = currentPet.name;
+    document.getElementById('petSpecies').value = currentPet.species;
+    document.getElementById('petBreed').value = currentPet.breed || '';
+    document.getElementById('petColor').value = currentPet.color || '';
+    document.getElementById('petBirthDate').value = currentPet.birth_date || '';
+    document.getElementById('petPhone').value = currentPet.contact_phone || '';
+    document.getElementById('petAddress').value = currentPet.contact_address || '';
+    document.getElementById('petVaccinated').checked = currentPet.is_vaccinated || false;
+    document.getElementById('petVaccinationDate').value = currentPet.vaccination_date || '';
+    document.getElementById('petAllergies').value = currentPet.allergies || '';
+    document.getElementById('petAdditionalInfo').value = currentPet.additional_info || '';
+    document.getElementById('petLostNote').value = currentPet.lost_note || '';
+    
+    const isLost = currentPet.is_lost || false;
+    document.getElementById('petLost').value = isLost;
+    document.getElementById('petLostToggle').classList.toggle('active', isLost);
+    document.getElementById('lostNoteGroup').style.display = isLost ? 'block' : 'none';
+    
+    const notifyOn = currentPet.notify_on_scan || false;
+    document.getElementById('petNotify').value = notifyOn;
+    document.getElementById('petNotifyToggle').classList.toggle('active', notifyOn);
+    
+    showPage('petFormPage');
+}
+
+function toggleLost() {
+    const toggle = document.getElementById('petLostToggle');
+    const input = document.getElementById('petLost');
+    const noteGroup = document.getElementById('lostNoteGroup');
+    const isActive = toggle.classList.toggle('active');
+    input.value = isActive;
+    noteGroup.style.display = isActive ? 'block' : 'none';
+}
+
+function toggleNotify() {
+    const toggle = document.getElementById('petNotifyToggle');
+    const input = document.getElementById('petNotify');
+    const isActive = toggle.classList.toggle('active');
+    input.value = isActive;
+}
+
+async function handlePetSubmit(e) {
+    e.preventDefault();
+    
+    const petId = document.getElementById('petId').value;
+    const petData = {
+        owner_id: currentUser.id,
+        name: document.getElementById('petName').value,
+        species: document.getElementById('petSpecies').value,
+        breed: document.getElementById('petBreed').value || null,
+        color: document.getElementById('petColor').value || null,
+        birth_date: document.getElementById('petBirthDate').value || null,
+        contact_phone: document.getElementById('petPhone').value || null,
+        contact_address: document.getElementById('petAddress').value || null,
+        is_vaccinated: document.getElementById('petVaccinated').checked,
+        vaccination_date: document.getElementById('petVaccinationDate').value || null,
+        allergies: document.getElementById('petAllergies').value || null,
+        additional_info: document.getElementById('petAdditionalInfo').value || null,
+        is_lost: document.getElementById('petLost').value === 'true',
+        lost_note: document.getElementById('petLostNote').value || null,
+        notify_on_scan: document.getElementById('petNotify').value === 'true'
+    };
+    
+    let result;
+    if (petId) {
+        result = await supabase.from('pets').update(petData).eq('id', petId).select();
+    } else {
+        result = await supabase.from('pets').insert(petData).select();
+    }
+    
+    if (result.error) {
+        showToast('Chyba: ' + result.error.message);
+        return;
+    }
+    
+    showToast(petId ? 'Mazl&#xED;&#x10D;ek upraven!' : 'Mazl&#xED;&#x10D;ek p&#x159;id&#xE1;n!');
+    await loadPets();
+    showPage('dashboardPage');
+}
+
+async function deleteCurrentPet() {
+    if (!currentPet) return;
+    if (!confirm('Opravdu chce&#x161; smazat mazl&#xED;&#x10D;ka ' + currentPet.name + '?')) return;
+    
+    const { error } = await supabase.from('pets').delete().eq('id', currentPet.id);
+    
+    if (error) {
+        showToast('Chyba p&#x159;i maz&#xE1;n&#xED;');
+        return;
+    }
+    
+    showToast('Mazl&#xED;&#x10D;ek smaz&#xE1;n');
+    await loadPets();
+    showPage('dashboardPage');
+}
+
+// ===== PROFILE =====
+async function loadProfile() {
+    const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', currentUser.id)
+        .single();
+    
+    if (error || !data) return;
+    
+    document.getElementById('profileName').value = data.full_name || '';
+    document.getElementById('profileEmail').value = data.email || '';
+    document.getElementById('profilePhone').value = data.phone || '';
+    document.getElementById('profileAddress').value = data.address || '';
+}
+
+async function handleProfileUpdate(e) {
+    e.preventDefault();
+    
+    const { error } = await supabase
+        .from('profiles')
+        .update({
+            full_name: document.getElementById('profileName').value,
+            phone: document.getElementById('profilePhone').value,
+            address: document.getElementById('profileAddress').value
+        })
+        .eq('id', currentUser.id);
+    
+    if (error) {
+        showToast('Chyba p&#x159;i ukl&#xE1;d&#xE1;n&#xED;');
+        return;
+    }
+    
+    showToast('Profil ulo&#x17E;en!');
+}
+
+// ===== PUBLIC PET PAGE =====
+async function loadPublicPet(slug) {
+    const { data: pet, error } = await supabase
+        .from('pets')
+        .select('*, profiles(full_name, phone, address)')
+        .eq('nfc_slug', slug)
+        .single();
+    
+    if (error || !pet) {
+        document.getElementById('publicPetName').textContent = 'Mazl&#xED;&#x10D;ek nenalezen';
+        document.getElementById('publicPetSpecies').textContent = 'Zkontroluj odkaz na NFC &#x10D;ip';
+        return;
+    }
+    
+    document.getElementById('publicPetName').textContent = pet.name;
+    document.getElementById('publicPetSpecies').textContent = speciesNames[pet.species] || pet.species;
+    document.getElementById('publicPetAvatar').textContent = speciesEmoji[pet.species] || '&#x1F43E;';
+    document.getElementById('foundPetId').value = pet.id;
+    
+    // Lost banner
+    const lostBanner = document.getElementById('publicLostBanner');
+    if (pet.is_lost) {
+        lostBanner.style.display = 'block';
+        if (pet.lost_note) {
+            lostBanner.innerHTML = `&#x26A0;&#xFE0F; ${escapeHtml(pet.lost_note)}`;
+        }
+    }
+    
+    // Pet details
+    const detailsHtml = [
+        pet.breed && renderDetailRow('Plemeno', pet.breed),
+        pet.color && renderDetailRow('Barva', pet.color),
+        pet.birth_date && renderDetailRow('V&#x11B;k', calculateAge(pet.birth_date)),
+        pet.is_vaccinated !== null && renderDetailRow('O&#x10D;kov&#xE1;n&#xED;', pet.is_vaccinated ? '&#x2705; O&#x10D;kovan&#xFD;' + (pet.vaccination_date ? ' (' + formatDate(pet.vaccination_date) + ')' : '') : '&#x274C; Neo&#x10D;kovan&#xFD;'),
+        pet.allergies && renderDetailRow('Alergie', pet.allergies),
+        pet.additional_info && renderDetailRow('Dal&#x161;&#xED; info', pet.additional_info)
+    ].filter(Boolean).join('');
+    
+    document.getElementById('publicPetDetails').innerHTML = detailsHtml || '<p style="color: var(--text-secondary);">&#x17E;&#xE1;dn&#xE9; dal&#x161;&#xED; informace.</p>';
+    
+    // Contact info
+    const phone = pet.contact_phone || pet.profiles?.phone || '&#x2014;';
+    const address = pet.contact_address || pet.profiles?.address || '&#x2014;';
+    const ownerName = pet.profiles?.full_name || 'Majitel';
+    
+    document.getElementById('publicContactInfo').innerHTML = `
+        ${renderDetailRow('Jm&#xE9;no majitele', ownerName)}
+        ${renderDetailRow('Telefon', phone)}
+        ${renderDetailRow('Adresa', address)}
+    `;
+}
+
+async function handleFoundSubmit(e) {
+    e.preventDefault();
+    
+    const petId = document.getElementById('foundPetId').value;
+    const reportData = {
+        pet_id: petId,
+        finder_name: document.getElementById('foundName').value,
+        finder_phone: document.getElementById('foundPhone').value || null,
+        finder_email: document.getElementById('foundEmail').value || null,
+        location: document.getElementById('foundLocation').value || null,
+        message: document.getElementById('foundMessage').value || null
+    };
+    
+    const { error } = await supabase.from('found_reports').insert(reportData);
+    
+    if (error) {
+        showToast('Chyba p&#x159;i odes&#xED;l&#xE1;n&#xED;. Zkus to znovu.');
+        return;
+    }
+    
+    showToast('Zpr&#xE1;va odesl&#xE1;na majiteli! D&#x11B;kujeme. &#x2764;&#xFE0F;');
+    document.getElementById('foundForm').reset();
+}
+
+// ===== UTILS =====
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => showToast('Zkop&#xED;rov&#xE1;no!'));
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function formatDate(dateStr) {
+    if (!dateStr) return '';
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('cs-CZ');
+}
+
+function calculateAge(birthDate) {
+    const birth = new Date(birthDate);
+    const now = new Date();
+    const years = now.getFullYear() - birth.getFullYear();
+    const months = now.getMonth() - birth.getMonth();
+    
+    if (years < 1) {
+        return months + ' m&#x11B;s&#xED;c&#x16F;';
+    }
+    return years + ' let';
+}
+</script>
+
+</body>
+</html>
