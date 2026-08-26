@@ -807,7 +807,7 @@
                 <input type="hidden" id="petLost" value="false">
                 
                 <div class="form-group" id="lostNoteGroup" style="display: none;">
-                    <label class="form-label">Zpr&#xE1;va p&#x159;i ztr&#xE1;t&#x11B;</label>
+                    <label class="form-label">Zpr&#xE1;va p&#x159;i ztr&#E1;t&#x11B;</label>
                     <textarea class="form-textarea" id="petLostNote" placeholder="Pomozte mi naj&#xED;t m&#xE9;ho mazl&#xED;&#x10D;ka! Posledn&#x11B; vid&#x11B;n u..."></textarea>
                 </div>
                 
@@ -929,6 +929,8 @@
 <div id="toast" class="toast"></div>
 
 <script>
+(function() {
+
 // ===== SUPABASE CONFIG =====
 const SUPABASE_URL = 'https://uvrdnpexejccykgfjabq.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2cmRucGV4ZWpjY3lrZ2ZqYWJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc3NjE1OTIsImV4cCI6MjEwMzMzNzU5Mn0.Y9dOeUX_5tpeGCk-G8F-UrB8FdQGv_EtQfxV1qpMYnA';
@@ -1473,6 +1475,7 @@ function calculateAge(birthDate) {
     }
     return years + ' let';
 }
+})();
 </script>
 
 </body>
