@@ -986,14 +986,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Check auth state
     const { data: { session } } = await supabaseClient.auth.getSession();
+    console.log('[DEBUG] session:', session);
     if (session) {
         currentUser = session.user;
+        console.log('[DEBUG] currentUser.id:', currentUser.id);
         showApp();
     }
     
     // Listen for auth changes
     supabaseClient.auth.onAuthStateChange((event, session) => {
-        if (event === 'SIGNED_IN' && session) {
+        if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session) {
             currentUser = session.user;
             showApp();
         } else if (event === 'SIGNED_OUT') {
@@ -1011,6 +1013,7 @@ function showPage(pageId) {
 }
 
 function showApp() {
+    console.log('[DEBUG] showApp, currentUser:', currentUser);
     document.getElementById('authPage').style.display = 'none';
     document.getElementById('appPages').style.display = 'block';
     document.getElementById('publicPage').style.display = 'none';
@@ -1091,14 +1094,26 @@ function getErrorMessage(msg) {
 
 // ===== PETS =====
 async function loadPets() {
-    const { data, error } = await supabase
+    console.log('[DEBUG] loadPets called, currentUser:', currentUser);
+    const container = document.getElementById('petsList');
+    
+    if (!currentUser || !currentUser.id) {
+        console.error('[DEBUG] loadPets: currentUser is missing!');
+        container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--danger)">Chyba: U&#x17E;ivatel nen&#xED; p&#x159;ihl&#xE1;&#x161;en.</div>';
+        return;
+    }
+    
+    const { data, error } = await supabaseClient
         .from('pets')
         .select('*')
         .eq('owner_id', currentUser.id)
         .order('created_at', { ascending: false });
     
+    console.log('[DEBUG] loadPets result:', { data, error, count: data ? data.length : 0 });
+    
     if (error) {
-        showToast('Chyba p&#x159;i na&#x10D;&#xED;t&#xE1;n&#xED; mazl&#xED;&#x10D;k&#x16F;');
+        console.error('[DEBUG] loadPets error:', error);
+        container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--danger)"><strong>Chyba p&#x159;i na&#x10D;&#xED;t&#xE1;n&#xED;:</strong><br>' + escapeHtml(error.message) + '<br><br><button class="btn btn-primary" onclick="loadPets()">Zkusit znovu</button></div>';
         return;
     }
     
@@ -1107,12 +1122,14 @@ async function loadPets() {
 }
 
 function renderPetsList() {
+    console.log('[DEBUG] renderPetsList, pets count:', pets.length);
     const container = document.getElementById('petsList');
     const emptyEl = document.getElementById('emptyPets');
     
     if (pets.length === 0) {
         container.innerHTML = '';
         emptyEl.style.display = 'block';
+        console.log('[DEBUG] showing empty state');
         return;
     }
     
@@ -1328,7 +1345,7 @@ async function deleteCurrentPet() {
 
 // ===== PROFILE =====
 async function loadProfile() {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from('profiles')
         .select('*')
         .eq('id', currentUser.id)
@@ -1345,7 +1362,7 @@ async function loadProfile() {
 async function handleProfileUpdate(e) {
     e.preventDefault();
     
-    const { error } = await supabase
+    const { error } = await supabaseClient
         .from('profiles')
         .update({
             full_name: document.getElementById('profileName').value,
@@ -1364,7 +1381,7 @@ async function handleProfileUpdate(e) {
 
 // ===== PUBLIC PET PAGE =====
 async function loadPublicPet(slug) {
-    const { data: pet, error } = await supabase
+    const { data: pet, error } = await supabaseClient
         .from('pets')
         .select('*, profiles(full_name, phone, address)')
         .eq('nfc_slug', slug)
