@@ -933,7 +933,12 @@
 const SUPABASE_URL = 'https://uvrdnpexejccykgfjabq.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2cmRucGV4ZWpjY3lrZ2ZqYWJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc3NjE1OTIsImV4cCI6MjEwMzMzNzU5Mn0.Y9dOeUX_5tpeGCk-G8F-UrB8FdQGv_EtQfxV1qpMYnA';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let supabase = null;
+try {
+    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+} catch (e) {
+    console.error('Supabase failed to load:', e);
+}
 
 // ===== STATE =====
 let currentUser = null;
