@@ -966,6 +966,11 @@ const speciesNames = {
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async () => {
+    if (!supabase) {
+        showToast('Chyba připojení k serveru. Zkus obnovit stránku.');
+        return;
+    }
+    
     // Check if we're on a public pet page
     const urlParams = new URLSearchParams(window.location.search);
     const petSlug = urlParams.get('pet');
