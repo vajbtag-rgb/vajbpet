@@ -929,15 +929,14 @@
 <div id="toast" class="toast"></div>
 
 <script>
-(function() {
 
 // ===== SUPABASE CONFIG =====
 const SUPABASE_URL = 'https://uvrdnpexejccykgfjabq.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2cmRucGV4ZWpjY3lrZ2ZqYWJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc3NjE1OTIsImV4cCI6MjEwMzMzNzU5Mn0.Y9dOeUX_5tpeGCk-G8F-UrB8FdQGv_EtQfxV1qpMYnA';
 
-let supabase = null;
+let supabaseClient = null;
 try {
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 } catch (e) {
     console.error('Supabase failed to load:', e);
 }
@@ -968,8 +967,8 @@ const speciesNames = {
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async () => {
-    if (!supabase) {
-        showToast('Chyba připojení k serveru. Zkus obnovit stránku.');
+    if (!supabaseClient) {
+        showToast('Chyba pripojeni k serveru. Zkus obnovit stranku.');
         return;
     }
     
@@ -986,14 +985,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     // Check auth state
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await supabaseClient.auth.getSession();
     if (session) {
         currentUser = session.user;
         showApp();
     }
     
     // Listen for auth changes
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabaseClient.auth.onAuthStateChange((event, session) => {
         if (event === 'SIGNED_IN' && session) {
             currentUser = session.user;
             showApp();
@@ -1045,7 +1044,7 @@ async function handleLogin(e) {
     const password = document.getElementById('loginPassword').value;
     const errorEl = document.getElementById('loginError');
     
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
     
     if (error) {
         errorEl.textContent = getErrorMessage(error.message);
@@ -1062,7 +1061,7 @@ async function handleRegister(e) {
     const password = document.getElementById('registerPassword').value;
     const errorEl = document.getElementById('registerError');
     
-    const { data, error } = await supabase.auth.signUp({
+    const { data, error } = await supabaseClient.auth.signUp({
         email,
         password,
         options: { data: { full_name: name } }
@@ -1079,7 +1078,7 @@ async function handleRegister(e) {
 }
 
 async function handleLogout() {
-    await supabase.auth.signOut();
+    await supabaseClient.auth.signOut();
 }
 
 function getErrorMessage(msg) {
@@ -1296,9 +1295,9 @@ async function handlePetSubmit(e) {
     
     let result;
     if (petId) {
-        result = await supabase.from('pets').update(petData).eq('id', petId).select();
+        result = await supabaseClient.from('pets').update(petData).eq('id', petId).select();
     } else {
-        result = await supabase.from('pets').insert(petData).select();
+        result = await supabaseClient.from('pets').insert(petData).select();
     }
     
     if (result.error) {
@@ -1315,7 +1314,7 @@ async function deleteCurrentPet() {
     if (!currentPet) return;
     if (!confirm('Opravdu chce&#x161; smazat mazl&#xED;&#x10D;ka ' + currentPet.name + '?')) return;
     
-    const { error } = await supabase.from('pets').delete().eq('id', currentPet.id);
+    const { error } = await supabaseClient.from('pets').delete().eq('id', currentPet.id);
     
     if (error) {
         showToast('Chyba p&#x159;i maz&#xE1;n&#xED;');
@@ -1428,7 +1427,7 @@ async function handleFoundSubmit(e) {
         message: document.getElementById('foundMessage').value || null
     };
     
-    const { error } = await supabase.from('found_reports').insert(reportData);
+    const { error } = await supabaseClient.from('found_reports').insert(reportData);
     
     if (error) {
         showToast('Chyba p&#x159;i odes&#xED;l&#xE1;n&#xED;. Zkus to znovu.');
@@ -1475,7 +1474,6 @@ function calculateAge(birthDate) {
     }
     return years + ' let';
 }
-})();
 </script>
 
 </body>
