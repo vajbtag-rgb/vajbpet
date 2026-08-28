@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VajbPet - Digit&#xE1;ln&#xED; karta mazl&#xED;&#x10D;ka</title>
+    <title>VajbPet - Digitální karta mazlíčka</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -625,13 +625,13 @@
 <div id="authPage" class="page active">
     <div class="auth-page">
         <div class="auth-logo">
-            <div class="logo-icon">&#x1F43E;</div>
+            <div class="logo-icon">🐾</div>
             <h1>VajbPet</h1>
-            <p>Digit&#xE1;ln&#xED; karta pro tv&#xE9;ho mazl&#xED;&#x10D;ka</p>
+            <p>Digitální karta pro tvého mazlíčka</p>
         </div>
         <div class="container">
             <div class="auth-tabs">
-                <button class="auth-tab active" onclick="switchAuthTab('login')">P&#x159;ihl&#xE1;&#x161;en&#xED;</button>
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Přihlášení</button>
                 <button class="auth-tab" onclick="switchAuthTab('register')">Registrace</button>
             </div>
             
@@ -642,16 +642,16 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label">Heslo</label>
-                    <input type="password" class="form-input" id="loginPassword" required placeholder="&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;">
+                    <input type="password" class="form-input" id="loginPassword" required placeholder="••••••••">
                 </div>
-                <button type="submit" class="btn btn-primary">P&#x159;ihl&#xE1;sit se</button>
+                <button type="submit" class="btn btn-primary">Přihlásit se</button>
                 <p id="loginError" style="color: var(--danger); margin-top: 12px; font-size: 14px; display: none;"></p>
             </form>
             
             <form id="registerForm" class="auth-form" onsubmit="handleRegister(event)">
                 <div class="form-group">
-                    <label class="form-label">Jm&#xE9;no</label>
-                    <input type="text" class="form-input" id="registerName" required placeholder="Jan Nov&#xE1;k">
+                    <label class="form-label">Jméno</label>
+                    <input type="text" class="form-input" id="registerName" required placeholder="Jan Novák">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Email</label>
@@ -659,9 +659,9 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label">Heslo</label>
-                    <input type="password" class="form-input" id="registerPassword" required minlength="6" placeholder="Min. 6 znak&#x16F;">
+                    <input type="password" class="form-input" id="registerPassword" required minlength="6" placeholder="Min. 6 znaků">
                 </div>
-                <button type="submit" class="btn btn-primary">Vytvo&#x159;it &#xFA;&#x10D;et</button>
+                <button type="submit" class="btn btn-primary">Vytvořit účet</button>
                 <p id="registerError" style="color: var(--danger); margin-top: 12px; font-size: 14px; display: none;"></p>
             </form>
         </div>
@@ -673,13 +673,13 @@
     <!-- Header -->
     <header class="header">
         <div class="container header-content">
-            <div class="logo">
-                <div class="logo-icon">&#x1F43E;</div>
+            <div class="logo" onclick="goHome()" style="cursor: pointer;">
+                <div class="logo-icon">🐾</div>
                 <span>VajbPet</span>
             </div>
             <div style="display: flex; gap: 8px;">
-                <button class="btn-icon" onclick="showPage('profilePage')" title="Profil">&#x1F464;</button>
-                <button class="btn-icon" onclick="handleLogout()" title="Odhl&#xE1;sit se">&#x1F6AA;</button>
+                <button class="btn-icon" onclick="showPage('profilePage')" title="Profil">👤</button>
+                <button class="btn-icon" onclick="handleLogout()" title="Odhlásit se">🚪</button>
             </div>
         </div>
     </header>
@@ -687,17 +687,17 @@
     <!-- Dashboard -->
     <div id="dashboardPage" class="page active">
         <div class="container">
-            <h2 style="margin-bottom: 8px; font-size: 24px;">Moji mazl&#xED;&#x10D;ci</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 24px;">Spr&#xE1;va digit&#xE1;ln&#xED;ch karet</p>
+            <h2 style="margin-bottom: 8px; font-size: 24px;">Moji mazlíčci</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 24px;">Správa digitálních karet</p>
             
             <div id="petsList">
-                <div class="loading"><span class="spinner"></span> Na&#x10D;&#xED;t&#xE1;n&#xED;...</div>
+                <div class="loading"><span class="spinner"></span> Načítání...</div>
             </div>
             
             <div id="emptyPets" class="empty-state" style="display: none;">
-                <div class="empty-state-icon">&#x1F415;</div>
-                <h3>Zat&#xED;m nem&#xE1;&#x161; &#x17E;&#xE1;dn&#xE9; mazl&#xED;&#x10D;ky</h3>
-                <p>P&#x159;idej sv&#xE9;ho prvn&#xED;ho mazl&#xED;&#x10D;ka a vytvo&#x159; mu digit&#xE1;ln&#xED; kartu s NFC &#x10D;ipem.</p>
+                <div class="empty-state-icon">🐕</div>
+                <h3>Zatím nemáš žádné mazlíčky</h3>
+                <p>Přidej svého prvního mazlíčka a vytvoř mu digitální kartu s NFC čipem.</p>
             </div>
         </div>
         
@@ -707,7 +707,7 @@
     <!-- Pet Detail -->
     <div id="petDetailPage" class="page">
         <div class="container">
-            <button class="btn btn-secondary btn-sm" onclick="showPage('dashboardPage')" style="width: auto; margin-bottom: 16px;">&#x2190; Zp&#x11B;t</button>
+            <button class="btn btn-secondary btn-sm" onclick="showPage('dashboardPage')" style="width: auto; margin-bottom: 16px;">← Zpět</button>
             
             <div id="petDetailContent"></div>
             
@@ -721,103 +721,103 @@
     <!-- Pet Form -->
     <div id="petFormPage" class="page">
         <div class="container">
-            <button class="btn btn-secondary btn-sm" onclick="showPage('dashboardPage')" style="width: auto; margin-bottom: 16px;">&#x2190; Zp&#x11B;t</button>
+            <button class="btn btn-secondary btn-sm" onclick="showPage('dashboardPage')" style="width: auto; margin-bottom: 16px;">← Zpět</button>
             
-            <h2 id="petFormTitle" style="margin-bottom: 24px;">Nov&#xFD; mazl&#xED;&#x10D;ek</h2>
+            <h2 id="petFormTitle" style="margin-bottom: 24px;">Nový mazlíček</h2>
             
             <form id="petForm" onsubmit="handlePetSubmit(event)">
                 <input type="hidden" id="petId">
                 
-                <p class="section-title">Z&#xE1;kladn&#xED; informace</p>
+                <p class="section-title">Základní informace</p>
                 
                 <div class="form-group">
-                    <label class="form-label">Jm&#xE9;no mazl&#xED;&#x10D;ka *</label>
-                    <input type="text" class="form-input" id="petName" required placeholder="nap&#x159;. Rex">
+                    <label class="form-label">Jméno mazlíčka *</label>
+                    <input type="text" class="form-input" id="petName" required placeholder="např. Rex">
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Druh *</label>
                     <select class="form-select" id="petSpecies" required>
                         <option value="">Vyberte druh</option>
-                        <option value="dog">&#x1F415; Pes</option>
-                        <option value="cat">&#x1F408; Ko&#x10D;ka</option>
-                        <option value="rabbit">&#x1F430; Kr&#xE1;l&#xED;k</option>
-                        <option value="bird">&#x1F426; Pt&#xE1;k</option>
-                        <option value="hamster">&#x1F439; K&#x159;e&#x10D;ek</option>
-                        <option value="other">&#x1F43E; Jin&#xE9;</option>
+                        <option value="dog">🐕 Pes</option>
+                        <option value="cat">🐈 Kočka</option>
+                        <option value="rabbit">🐰 Králík</option>
+                        <option value="bird">🐦 Pták</option>
+                        <option value="hamster">🐹 Křeček</option>
+                        <option value="other">🐾 Jiné</option>
                     </select>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Plemeno</label>
-                    <input type="text" class="form-input" id="petBreed" placeholder="nap&#x159;. Labradorsk&#xFD; retr&#xED;vr">
+                    <input type="text" class="form-input" id="petBreed" placeholder="např. Labradorský retrívr">
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Barva</label>
-                    <input type="text" class="form-input" id="petColor" placeholder="nap&#x159;. Hn&#x11B;d&#xE1;">
+                    <input type="text" class="form-input" id="petColor" placeholder="např. Hnědá">
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Datum narozen&#xED;</label>
+                    <label class="form-label">Datum narození</label>
                     <input type="date" class="form-input" id="petBirthDate">
                 </div>
                 
-                <p class="section-title">Kontaktn&#xED; &#xFA;daje (zobrazen&#xE9; po naskenov&#xE1;n&#xED;)</p>
-                <p class="form-hint" style="margin-bottom: 16px;">Pokud nevypln&#xED;&#x161;, pou&#x17E;ij&#xED; se &#xFA;daje z tv&#xE9;ho profilu.</p>
+                <p class="section-title">Kontaktní údaje (zobrazené po naskenování)</p>
+                <p class="form-hint" style="margin-bottom: 16px;">Pokud nevyplníš, použijí se údaje z tvého profilu.</p>
                 
                 <div class="form-group">
-                    <label class="form-label">Telefonn&#xED; &#x10D;&#xED;slo</label>
+                    <label class="form-label">Telefonní číslo</label>
                     <input type="tel" class="form-input" id="petPhone" placeholder="+420 123 456 789">
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Adresa</label>
-                    <input type="text" class="form-input" id="petAddress" placeholder="Ulice 123, M&#x11B;sto">
+                    <input type="text" class="form-input" id="petAddress" placeholder="Ulice 123, Město">
                 </div>
                 
-                <p class="section-title">Zdravotn&#xED; &#xFA;daje</p>
+                <p class="section-title">Zdravotní údaje</p>
                 
                 <div class="checkbox-group">
                     <input type="checkbox" id="petVaccinated">
-                    <label for="petVaccinated">Je o&#x10D;kovan&#xFD;</label>
+                    <label for="petVaccinated">Je očkovaný</label>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Datum posledn&#xED;ho o&#x10D;kov&#xE1;n&#xED;</label>
+                    <label class="form-label">Datum posledního očkování</label>
                     <input type="date" class="form-input" id="petVaccinationDate">
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Alergie</label>
-                    <input type="text" class="form-input" id="petAllergies" placeholder="nap&#x159;. Alergie na pyl">
+                    <input type="text" class="form-input" id="petAllergies" placeholder="např. Alergie na pyl">
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Dal&#x161;&#xED; informace</label>
-                    <textarea class="form-textarea" id="petAdditionalInfo" placeholder="Jak&#xE9;koli dal&#x161;&#xED; d&#x16F;le&#x17E;it&#xE9; informace..."></textarea>
+                    <label class="form-label">Další informace</label>
+                    <textarea class="form-textarea" id="petAdditionalInfo" placeholder="Jakékoli další důležité informace..."></textarea>
                 </div>
                 
-                <p class="section-title">Nastaven&#xED;</p>
+                <p class="section-title">Nastavení</p>
                 
                 <div class="toggle">
-                    <span class="toggle-label">Mazl&#xED;&#x10D;ek je ztracen&#xFD;</span>
+                    <span class="toggle-label">Mazlíček je ztracený</span>
                     <div class="toggle-switch" id="petLostToggle" onclick="toggleLost()"></div>
                 </div>
                 <input type="hidden" id="petLost" value="false">
                 
                 <div class="form-group" id="lostNoteGroup" style="display: none;">
-                    <label class="form-label">Zpr&#xE1;va p&#x159;i ztr&#E1;t&#x11B;</label>
-                    <textarea class="form-textarea" id="petLostNote" placeholder="Pomozte mi naj&#xED;t m&#xE9;ho mazl&#xED;&#x10D;ka! Posledn&#x11B; vid&#x11B;n u..."></textarea>
+                    <label class="form-label">Zpráva při ztrátě</label>
+                    <textarea class="form-textarea" id="petLostNote" placeholder="Pomozte mi najít mého mazlíčka! Posledně viděn u..."></textarea>
                 </div>
                 
                 <div class="toggle">
-                    <span class="toggle-label">Notifikace p&#x159;i naskenov&#xE1;n&#xED;</span>
+                    <span class="toggle-label">Notifikace při naskenování</span>
                     <div class="toggle-switch" id="petNotifyToggle" onclick="toggleNotify()"></div>
                 </div>
                 <input type="hidden" id="petNotify" value="false">
                 
-                <button type="submit" class="btn btn-primary" style="margin-top: 24px;">Ulo&#x17E;it mazl&#xED;&#x10D;ka</button>
+                <button type="submit" class="btn btn-primary" style="margin-top: 24px;">Uložit mazlíčka</button>
             </form>
         </div>
     </div>
@@ -825,14 +825,14 @@
     <!-- Profile Page -->
     <div id="profilePage" class="page">
         <div class="container">
-            <button class="btn btn-secondary btn-sm" onclick="showPage('dashboardPage')" style="width: auto; margin-bottom: 16px;">&#x2190; Zp&#x11B;t</button>
+            <button class="btn btn-secondary btn-sm" onclick="showPage('dashboardPage')" style="width: auto; margin-bottom: 16px;">← Zpět</button>
             
-            <h2 style="margin-bottom: 24px;">M&#x16F;j profil</h2>
+            <h2 style="margin-bottom: 24px;">Můj profil</h2>
             
             <form id="profileForm" onsubmit="handleProfileUpdate(event)">
                 <div class="form-group">
-                    <label class="form-label">Jm&#xE9;no</label>
-                    <input type="text" class="form-input" id="profileName" placeholder="Jan Nov&#xE1;k">
+                    <label class="form-label">Jméno</label>
+                    <input type="text" class="form-input" id="profileName" placeholder="Jan Novák">
                 </div>
                 
                 <div class="form-group">
@@ -841,16 +841,16 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Telefonn&#xED; &#x10D;&#xED;slo</label>
+                    <label class="form-label">Telefonní číslo</label>
                     <input type="tel" class="form-input" id="profilePhone" placeholder="+420 123 456 789">
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Adresa</label>
-                    <input type="text" class="form-input" id="profileAddress" placeholder="Ulice 123, M&#x11B;sto">
+                    <input type="text" class="form-input" id="profileAddress" placeholder="Ulice 123, Město">
                 </div>
                 
-                <button type="submit" class="btn btn-primary">Ulo&#x17E;it zm&#x11B;ny</button>
+                <button type="submit" class="btn btn-primary">Uložit změny</button>
             </form>
         </div>
     </div>
@@ -859,19 +859,19 @@
 <!-- Public Pet Page (no auth) -->
 <div id="publicPage" class="public-page" style="display: none;">
     <div class="public-header">
-        <div class="pet-avatar" id="publicPetAvatar">&#x1F415;</div>
-        <h1 id="publicPetName">Na&#x10D;&#xED;t&#xE1;n&#xED;...</h1>
-        <p id="publicPetSpecies">Digit&#xE1;ln&#xED; karta mazl&#xED;&#x10D;ka</p>
+        <div class="pet-avatar" id="publicPetAvatar">🐕</div>
+        <h1 id="publicPetName">Načítání...</h1>
+        <p id="publicPetSpecies">Digitální karta mazlíčka</p>
     </div>
     
     <div class="public-content">
         <div class="container">
             <div id="publicLostBanner" class="lost-banner" style="display: none;">
-                &#x26A0;&#xFE0F; Tento mazl&#xED;&#x10D;ek je ztracen&#xFD;!
+                ⚠️ Tento mazlíček je ztracený!
             </div>
             
             <div class="card">
-                <h3 style="margin-bottom: 16px; font-size: 16px;">Informace o mazl&#xED;&#x10D;kovi</h3>
+                <h3 style="margin-bottom: 16px; font-size: 16px;">Informace o mazlíčkovi</h3>
                 <div id="publicPetDetails"></div>
             </div>
             
@@ -881,15 +881,15 @@
             </div>
             
             <div class="found-form">
-                <h3 style="margin-bottom: 12px; font-size: 16px;">Na&#x161;el jsi tohoto mazl&#xED;&#x10D;ka? &#x1F389;</h3>
-                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">Vypl&#x148; &#xFA;daje a dej majiteli v&#x11B;d&#x11B;t, &#x17E;e jeho mazl&#xED;&#x10D;ek je v po&#x159;&#xE1;dku.</p>
+                <h3 style="margin-bottom: 12px; font-size: 16px;">Našel jsi tohoto mazlíčka? 🎉</h3>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">Vyplň údaje a dej majiteli vědět, že jeho mazlíček je v pořádku.</p>
                 
                 <form id="foundForm" onsubmit="handleFoundSubmit(event)">
                     <input type="hidden" id="foundPetId">
                     
                     <div class="form-group">
-                        <label class="form-label">Tv&#xE9; jm&#xE9;no</label>
-                        <input type="text" class="form-input" id="foundName" required placeholder="Jm&#xE9;no">
+                        <label class="form-label">Tvé jméno</label>
+                        <input type="text" class="form-input" id="foundName" required placeholder="Jméno">
                     </div>
                     
                     <div class="form-group">
@@ -904,21 +904,21 @@
                     
                     <div class="form-group">
                         <label class="form-label">Lokalita</label>
-                        <input type="text" class="form-input" id="foundLocation" placeholder="Kde jsi mazl&#xED;&#x10D;ka na&#x161;el?">
+                        <input type="text" class="form-input" id="foundLocation" placeholder="Kde jsi mazlíčka našel?">
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Zpr&#xE1;va</label>
-                        <textarea class="form-textarea" id="foundMessage" placeholder="Napi&#x161; majiteli zpr&#xE1;vu..."></textarea>
+                        <label class="form-label">Zpráva</label>
+                        <textarea class="form-textarea" id="foundMessage" placeholder="Napiš majiteli zprávu..."></textarea>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary">Odeslat zpr&#xE1;vu majiteli</button>
+                    <button type="submit" class="btn btn-primary">Odeslat zprávu majiteli</button>
                 </form>
             </div>
             
             <div style="text-align: center; margin-top: 32px; padding-bottom: 32px;">
                 <p style="font-size: 13px; color: var(--text-secondary);">
-                    Vytvo&#x159;eno pomoc&#xED; <strong style="color: var(--primary);">VajbPet</strong> &#x1F43E;
+                    Vytvořeno pomocí <strong style="color: var(--primary);">VajbPet</strong> 🐾
                 </p>
             </div>
         </div>
@@ -948,21 +948,21 @@ let pets = [];
 
 // ===== SPECIES EMOJI =====
 const speciesEmoji = {
-    dog: '&#x1F415;',
-    cat: '&#x1F408;',
-    rabbit: '&#x1F430;',
-    bird: '&#x1F426;',
-    hamster: '&#x1F439;',
-    other: '&#x1F43E;'
+    dog: '🐕',
+    cat: '🐈',
+    rabbit: '🐰',
+    bird: '🐦',
+    hamster: '🐹',
+    other: '🐾'
 };
 
 const speciesNames = {
     dog: 'Pes',
-    cat: 'Ko&#x10D;ka',
-    rabbit: 'Kr&#xE1;l&#xED;k',
-    bird: 'Pt&#xE1;k',
-    hamster: 'K&#x159;e&#x10D;ek',
-    other: 'Jin&#xE9;'
+    cat: 'Kočka',
+    rabbit: 'Králík',
+    bird: 'Pták',
+    hamster: 'Křeček',
+    other: 'Jiné'
 };
 
 // ===== INIT =====
@@ -1010,6 +1010,18 @@ function showPage(pageId) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(pageId).classList.add('active');
     window.scrollTo(0, 0);
+}
+
+function goHome() {
+    document.getElementById('authPage').style.display = 'none';
+    document.getElementById('publicPage').style.display = 'none';
+    document.getElementById('appPages').style.display = 'block';
+    showPage('dashboardPage');
+    if (!currentUser) {
+        // Not logged in, show auth
+        document.getElementById('appPages').style.display = 'none';
+        document.getElementById('authPage').style.display = 'block';
+    }
 }
 
 function showApp() {
@@ -1075,7 +1087,7 @@ async function handleRegister(e) {
         errorEl.style.display = 'block';
     } else {
         errorEl.style.display = 'none';
-        showToast('&#xDA;&#x10D;et vytvo&#x159;en! Zkontroluj email pro potvrzen&#xED;.');
+        showToast('Účet vytvořen! Zkontroluj email pro potvrzení.');
         switchAuthTab('login');
     }
 }
@@ -1085,10 +1097,10 @@ async function handleLogout() {
 }
 
 function getErrorMessage(msg) {
-    if (msg.includes('Invalid login')) return 'Neplatn&#xFD; email nebo heslo';
-    if (msg.includes('Email not confirmed')) return 'Email zat&#xED;m nebyl potvrzen. Zkontroluj svou schr&#xE1;nku.';
-    if (msg.includes('User already registered')) return 'Tento email je ji&#x17E; zaregistrov&#xE1;n';
-    if (msg.includes('Password should be')) return 'Heslo mus&#xED; m&#xED;t alespo&#x148; 6 znak&#x16F;';
+    if (msg.includes('Invalid login')) return 'Neplatný email nebo heslo';
+    if (msg.includes('Email not confirmed')) return 'Email zatím nebyl potvrzen. Zkontroluj svou schránku.';
+    if (msg.includes('User already registered')) return 'Tento email je již zaregistrován';
+    if (msg.includes('Password should be')) return 'Heslo musí mít alespoň 6 znaků';
     return msg;
 }
 
@@ -1099,7 +1111,7 @@ async function loadPets() {
     
     if (!currentUser || !currentUser.id) {
         console.error('[DEBUG] loadPets: currentUser is missing!');
-        container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--danger)">Chyba: U&#x17E;ivatel nen&#xED; p&#x159;ihl&#xE1;&#x161;en.</div>';
+        container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--danger)">Chyba: Uživatel není přihlášen.</div>';
         return;
     }
     
@@ -1113,7 +1125,7 @@ async function loadPets() {
     
     if (error) {
         console.error('[DEBUG] loadPets error:', error);
-        container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--danger)"><strong>Chyba p&#x159;i na&#x10D;&#xED;t&#xE1;n&#xED;:</strong><br>' + escapeHtml(error.message) + '<br><br><button class="btn btn-primary" onclick="loadPets()">Zkusit znovu</button></div>';
+        container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--danger)"><strong>Chyba při načítání:</strong><br>' + escapeHtml(error.message) + '<br><br><button class="btn btn-primary" onclick="loadPets()">Zkusit znovu</button></div>';
         return;
     }
     
@@ -1138,22 +1150,22 @@ function renderPetsList() {
     // NFC URLs use relative query strings
     
     container.innerHTML = pets.map(pet => {
-        const nfcUrl = `?pet=${pet.nfc_slug}`;
+        const nfcUrl = `https://vajbtag-rgb.github.io/vajbpet/?pet=${pet.nfc_slug}`;
         return `
             <div class="pet-card ${pet.is_lost ? 'lost' : ''}" onclick="showPetDetail('${pet.id}')">
                 <div class="pet-card-header">
-                    <div class="pet-avatar">${speciesEmoji[pet.species] || '&#x1F43E;'}</div>
+                    <div class="pet-avatar">${speciesEmoji[pet.species] || '🐾'}</div>
                     <div class="pet-info">
                         <h3>${escapeHtml(pet.name)}</h3>
-                        <p>${speciesNames[pet.species] || pet.species}${pet.breed ? ' &#xB7; ' + escapeHtml(pet.breed) : ''}</p>
+                        <p>${speciesNames[pet.species] || pet.species}${pet.breed ? ' · ' + escapeHtml(pet.breed) : ''}</p>
                     </div>
                     ${pet.is_lost 
-                        ? '<span class="pet-status lost">&#x1F534; Ztracen&#xFD;</span>' 
-                        : '<span class="pet-status safe">&#x1F7E2; V po&#x159;&#xE1;dku</span>'}
+                        ? '<span class="pet-status lost">🔴 Ztracený</span>' 
+                        : '<span class="pet-status safe">🟢 V pořádku</span>'}
                 </div>
                 <div class="pet-nfc-link">
-                    <span>&#x1F517; ${nfcUrl}</span>
-                    <button onclick="event.stopPropagation(); copyToClipboard('${nfcUrl}')">Kop&#xED;rovat</button>
+                    <span>🔗 ${nfcUrl}</span>
+                    <button onclick="event.stopPropagation(); copyToClipboard('${nfcUrl}')">Kopírovat</button>
                 </div>
             </div>
         `;
@@ -1165,17 +1177,17 @@ async function showPetDetail(petId) {
     if (!currentPet) return;
     
     // NFC URLs use relative query strings
-    const nfcUrl = `?pet=${currentPet.nfc_slug}`;
+    const nfcUrl = `https://vajbtag-rgb.github.io/vajbpet/?pet=${currentPet.nfc_slug}`;
     
     document.getElementById('petDetailContent').innerHTML = `
         <div class="card">
             <div style="text-align: center; padding: 20px 0;">
                 <div class="pet-avatar" style="width: 80px; height: 80px; font-size: 40px; margin: 0 auto 16px;">
-                    ${speciesEmoji[currentPet.species] || '&#x1F43E;'}
+                    ${speciesEmoji[currentPet.species] || '🐾'}
                 </div>
                 <h2 style="font-size: 24px;">${escapeHtml(currentPet.name)}</h2>
-                <p style="color: var(--text-secondary);">${speciesNames[currentPet.species] || currentPet.species}${currentPet.breed ? ' &#xB7; ' + escapeHtml(currentPet.breed) : ''}</p>
-                ${currentPet.is_lost ? '<span class="pet-status lost" style="margin-top: 12px;">&#x1F534; Ztracen&#xFD;</span>' : '<span class="pet-status safe" style="margin-top: 12px;">&#x1F7E2; V po&#x159;&#xE1;dku</span>'}
+                <p style="color: var(--text-secondary);">${speciesNames[currentPet.species] || currentPet.species}${currentPet.breed ? ' · ' + escapeHtml(currentPet.breed) : ''}</p>
+                ${currentPet.is_lost ? '<span class="pet-status lost" style="margin-top: 12px;">🔴 Ztracený</span>' : '<span class="pet-status safe" style="margin-top: 12px;">🟢 V pořádku</span>'}
             </div>
         </div>
         
@@ -1183,41 +1195,41 @@ async function showPetDetail(petId) {
             <h3 style="margin-bottom: 16px; font-size: 16px;">NFC Odkaz</h3>
             <div class="pet-nfc-link" style="margin-top: 0;">
                 <span>${nfcUrl}</span>
-                <button onclick="copyToClipboard('${nfcUrl}')">Kop&#xED;rovat</button>
+                <button onclick="copyToClipboard('${nfcUrl}')">Kopírovat</button>
             </div>
-            <p class="form-hint" style="margin-top: 8px;">Tento odkaz nahraj do NFC &#x10D;ipu mazl&#xED;&#x10D;ka. Po naskenov&#xE1;n&#xED; se zobraz&#xED; jeho ve&#x159;ejn&#xE1; karta.</p>
+            <p class="form-hint" style="margin-top: 8px;">Tento odkaz nahraj do NFC čipu mazlíčka. Po naskenování se zobrazí jeho veřejná karta.</p>
         </div>
         
         <div class="card">
-            <h3 style="margin-bottom: 16px; font-size: 16px;">Z&#xE1;kladn&#xED; informace</h3>
-            ${renderDetailRow('Jm&#xE9;no', currentPet.name)}
+            <h3 style="margin-bottom: 16px; font-size: 16px;">Základní informace</h3>
+            ${renderDetailRow('Jméno', currentPet.name)}
             ${renderDetailRow('Druh', speciesNames[currentPet.species] || currentPet.species)}
             ${currentPet.breed ? renderDetailRow('Plemeno', currentPet.breed) : ''}
             ${currentPet.color ? renderDetailRow('Barva', currentPet.color) : ''}
-            ${currentPet.birth_date ? renderDetailRow('Datum narozen&#xED;', formatDate(currentPet.birth_date)) : ''}
+            ${currentPet.birth_date ? renderDetailRow('Datum narození', formatDate(currentPet.birth_date)) : ''}
         </div>
         
         <div class="card">
-            <h3 style="margin-bottom: 16px; font-size: 16px;">Kontaktn&#xED; &#xFA;daje</h3>
-            ${renderDetailRow('Telefon', currentPet.contact_phone || '&#x2014; (pou&#x17E;ije se z profilu)')}
-            ${renderDetailRow('Adresa', currentPet.contact_address || '&#x2014; (pou&#x17E;ije se z profilu)')}
+            <h3 style="margin-bottom: 16px; font-size: 16px;">Kontaktní údaje</h3>
+            ${renderDetailRow('Telefon', currentPet.contact_phone || '— (použije se z profilu)')}
+            ${renderDetailRow('Adresa', currentPet.contact_address || '— (použije se z profilu)')}
         </div>
         
         <div class="card">
-            <h3 style="margin-bottom: 16px; font-size: 16px;">Zdravotn&#xED; &#xFA;daje</h3>
-            ${renderDetailRow('O&#x10D;kov&#xE1;n&#xED;', currentPet.is_vaccinated ? '&#x2705; Ano' + (currentPet.vaccination_date ? ' (' + formatDate(currentPet.vaccination_date) + ')' : '') : '&#x274C; Ne')}
+            <h3 style="margin-bottom: 16px; font-size: 16px;">Zdravotní údaje</h3>
+            ${renderDetailRow('Očkování', currentPet.is_vaccinated ? '✅ Ano' + (currentPet.vaccination_date ? ' (' + formatDate(currentPet.vaccination_date) + ')' : '') : '❌ Ne')}
             ${currentPet.allergies ? renderDetailRow('Alergie', currentPet.allergies) : ''}
-            ${currentPet.additional_info ? renderDetailRow('Dal&#x161;&#xED; info', currentPet.additional_info) : ''}
+            ${currentPet.additional_info ? renderDetailRow('Další info', currentPet.additional_info) : ''}
         </div>
         
         <div class="card">
-            <h3 style="margin-bottom: 16px; font-size: 16px;">Nastaven&#xED;</h3>
-            ${renderDetailRow('Notifikace p&#x159;i naskenov&#xE1;n&#xED;', currentPet.notify_on_scan ? '&#x2705; Zapnuto' : '&#x274C; Vypnuto')}
+            <h3 style="margin-bottom: 16px; font-size: 16px;">Nastavení</h3>
+            ${renderDetailRow('Notifikace při naskenování', currentPet.notify_on_scan ? '✅ Zapnuto' : '❌ Vypnuto')}
         </div>
         
         ${currentPet.is_lost && currentPet.lost_note ? `
         <div class="card" style="border: 2px solid var(--danger);">
-            <h3 style="margin-bottom: 12px; font-size: 16px; color: var(--danger);">&#x26A0;&#xFE0F; Zpr&#xE1;va p&#x159;i ztr&#xE1;t&#x11B;</h3>
+            <h3 style="margin-bottom: 12px; font-size: 16px; color: var(--danger);">⚠️ Zpráva při ztrátě</h3>
             <p>${escapeHtml(currentPet.lost_note)}</p>
         </div>
         ` : ''}
@@ -1232,7 +1244,7 @@ function renderDetailRow(label, value) {
 
 // ===== PET FORM =====
 function resetPetForm() {
-    document.getElementById('petFormTitle').textContent = 'Nov&#xFD; mazl&#xED;&#x10D;ek';
+    document.getElementById('petFormTitle').textContent = 'Nový mazlíček';
     document.getElementById('petForm').reset();
     document.getElementById('petId').value = '';
     document.getElementById('petLost').value = 'false';
@@ -1245,7 +1257,7 @@ function resetPetForm() {
 function editCurrentPet() {
     if (!currentPet) return;
     
-    document.getElementById('petFormTitle').textContent = 'Upravit mazl&#xED;&#x10D;ka';
+    document.getElementById('petFormTitle').textContent = 'Upravit mazlíčka';
     document.getElementById('petId').value = currentPet.id;
     document.getElementById('petName').value = currentPet.name;
     document.getElementById('petSpecies').value = currentPet.species;
@@ -1322,23 +1334,23 @@ async function handlePetSubmit(e) {
         return;
     }
     
-    showToast(petId ? 'Mazl&#xED;&#x10D;ek upraven!' : 'Mazl&#xED;&#x10D;ek p&#x159;id&#xE1;n!');
+    showToast(petId ? 'Mazlíček upraven!' : 'Mazlíček přidán!');
     await loadPets();
     showPage('dashboardPage');
 }
 
 async function deleteCurrentPet() {
     if (!currentPet) return;
-    if (!confirm('Opravdu chce&#x161; smazat mazl&#xED;&#x10D;ka ' + currentPet.name + '?')) return;
+    if (!confirm('Opravdu chceš smazat mazlíčka ' + currentPet.name + '?')) return;
     
     const { error } = await supabaseClient.from('pets').delete().eq('id', currentPet.id);
     
     if (error) {
-        showToast('Chyba p&#x159;i maz&#xE1;n&#xED;');
+        showToast('Chyba při mazání');
         return;
     }
     
-    showToast('Mazl&#xED;&#x10D;ek smaz&#xE1;n');
+    showToast('Mazlíček smazán');
     await loadPets();
     showPage('dashboardPage');
 }
@@ -1372,11 +1384,11 @@ async function handleProfileUpdate(e) {
         .eq('id', currentUser.id);
     
     if (error) {
-        showToast('Chyba p&#x159;i ukl&#xE1;d&#xE1;n&#xED;');
+        showToast('Chyba při ukládání');
         return;
     }
     
-    showToast('Profil ulo&#x17E;en!');
+    showToast('Profil uložen!');
 }
 
 
@@ -1406,14 +1418,14 @@ async function loadPublicPet(slug) {
         .single();
     
     if (error || !pet) {
-        document.getElementById('publicPetName').textContent = 'Mazl&#xED;&#x10D;ek nenalezen';
-        document.getElementById('publicPetSpecies').textContent = 'Zkontroluj odkaz na NFC &#x10D;ip';
+        document.getElementById('publicPetName').textContent = 'Mazlíček nenalezen';
+        document.getElementById('publicPetSpecies').textContent = 'Zkontroluj odkaz na NFC čip';
         return;
     }
     
     document.getElementById('publicPetName').textContent = pet.name;
     document.getElementById('publicPetSpecies').textContent = speciesNames[pet.species] || pet.species;
-    document.getElementById('publicPetAvatar').textContent = speciesEmoji[pet.species] || '&#x1F43E;';
+    document.getElementById('publicPetAvatar').textContent = speciesEmoji[pet.species] || '🐾';
     document.getElementById('foundPetId').value = pet.id;
     
     // Lost banner
@@ -1421,7 +1433,7 @@ async function loadPublicPet(slug) {
     if (pet.is_lost) {
         lostBanner.style.display = 'block';
         if (pet.lost_note) {
-            lostBanner.innerHTML = `&#x26A0;&#xFE0F; ${escapeHtml(pet.lost_note)}`;
+            lostBanner.innerHTML = `⚠️ ${escapeHtml(pet.lost_note)}`;
         }
     }
     
@@ -1429,21 +1441,21 @@ async function loadPublicPet(slug) {
     const detailsHtml = [
         pet.breed && renderDetailRow('Plemeno', pet.breed),
         pet.color && renderDetailRow('Barva', pet.color),
-        pet.birth_date && renderDetailRow('V&#x11B;k', calculateAge(pet.birth_date)),
-        pet.is_vaccinated !== null && renderDetailRow('O&#x10D;kov&#xE1;n&#xED;', pet.is_vaccinated ? '&#x2705; O&#x10D;kovan&#xFD;' + (pet.vaccination_date ? ' (' + formatDate(pet.vaccination_date) + ')' : '') : '&#x274C; Neo&#x10D;kovan&#xFD;'),
+        pet.birth_date && renderDetailRow('Věk', calculateAge(pet.birth_date)),
+        pet.is_vaccinated !== null && renderDetailRow('Očkování', pet.is_vaccinated ? '✅ Očkovaný' + (pet.vaccination_date ? ' (' + formatDate(pet.vaccination_date) + ')' : '') : '❌ Neočkovaný'),
         pet.allergies && renderDetailRow('Alergie', pet.allergies),
-        pet.additional_info && renderDetailRow('Dal&#x161;&#xED; info', pet.additional_info)
+        pet.additional_info && renderDetailRow('Další info', pet.additional_info)
     ].filter(Boolean).join('');
     
-    document.getElementById('publicPetDetails').innerHTML = detailsHtml || '<p style="color: var(--text-secondary);">&#x17E;&#xE1;dn&#xE9; dal&#x161;&#xED; informace.</p>';
+    document.getElementById('publicPetDetails').innerHTML = detailsHtml || '<p style="color: var(--text-secondary);">žádné další informace.</p>';
     
     // Contact info
-    const phone = pet.contact_phone || pet.profiles?.phone || '&#x2014;';
-    const address = pet.contact_address || pet.profiles?.address || '&#x2014;';
+    const phone = pet.contact_phone || pet.profiles?.phone || '—';
+    const address = pet.contact_address || pet.profiles?.address || '—';
     const ownerName = pet.profiles?.full_name || 'Majitel';
     
     document.getElementById('publicContactInfo').innerHTML = `
-        ${renderDetailRow('Jm&#xE9;no majitele', ownerName)}
+        ${renderDetailRow('Jméno majitele', ownerName)}
         ${renderDetailRow('Telefon', phone)}
         ${renderDetailRow('Adresa', address)}
     `;
@@ -1470,14 +1482,14 @@ async function handleFoundSubmit(e) {
     const { error } = await supabaseClient.from('found_reports').insert(reportData);
     
     if (error) {
-        showToast('Chyba p&#x159;i odes&#xED;l&#xE1;n&#xED;. Zkus to znovu.');
+        showToast('Chyba při odesílání. Zkus to znovu.');
         return;
     }
     
     // Send email notification to owner (async, don't block UI)
     sendNotification(petId, 'found', reportData);
     
-    showToast('Zpr&#xE1;va odesl&#xE1;na majiteli! D&#x11B;kujeme. &#x2764;&#xFE0F;');
+    showToast('Zpráva odeslána majiteli! Děkujeme. ❤️');
     document.getElementById('foundForm').reset();
 }
 
@@ -1490,7 +1502,7 @@ function showToast(message) {
 }
 
 function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => showToast('Zkop&#xED;rov&#xE1;no!'));
+    navigator.clipboard.writeText(text).then(() => showToast('Zkopírováno!'));
 }
 
 function escapeHtml(text) {
@@ -1513,7 +1525,7 @@ function calculateAge(birthDate) {
     const months = now.getMonth() - birth.getMonth();
     
     if (years < 1) {
-        return months + ' m&#x11B;s&#xED;c&#x16F;';
+        return months + ' měsíců';
     }
     return years + ' let';
 }
