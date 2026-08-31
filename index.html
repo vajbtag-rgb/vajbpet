@@ -1150,7 +1150,7 @@ function renderPetsList() {
     // NFC URLs use relative query strings
     
     container.innerHTML = pets.map(pet => {
-        const nfcUrl = `https://vajbtag-rgb.github.io/vajbpet/?pet=${pet.nfc_slug}`;
+       const nfcUrl = `https://pet.vajbtag.cz/?pet=${pet.nfc_slug}`
         return `
             <div class="pet-card ${pet.is_lost ? 'lost' : ''}" onclick="showPetDetail('${pet.id}')">
                 <div class="pet-card-header">
@@ -1177,8 +1177,7 @@ async function showPetDetail(petId) {
     if (!currentPet) return;
     
     // NFC URLs use relative query strings
-    const nfcUrl = `https://vajbtag-rgb.github.io/vajbpet/?pet=${currentPet.nfc_slug}`;
-    
+   const nfcUrl = `https://pet.vajbtag.cz/?pet=${currentPet.nfc_slug}`;
     document.getElementById('petDetailContent').innerHTML = `
         <div class="card">
             <div style="text-align: center; padding: 20px 0;">
